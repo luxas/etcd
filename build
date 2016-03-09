@@ -3,6 +3,10 @@
 ORG_PATH="github.com/coreos"
 REPO_PATH="${ORG_PATH}/etcd"
 
+# Arch and os defaults to the host platform
+ARCH=${ARCH:-""}
+OS=${OS:-""}
+
 export GOPATH=${PWD}/gopath
 
 rm -f $GOPATH/src/${REPO_PATH}
@@ -29,5 +33,5 @@ else
 fi
 
 # Static compilation is useful when etcd is run in a container
-CGO_ENABLED=0 go build $GO_BUILD_FLAGS -installsuffix cgo -ldflags "-s -X ${REPO_PATH}/version.GitSHA${LINK_OPERATOR}${GIT_SHA}" -o bin/etcd ${REPO_PATH}
-CGO_ENABLED=0 go build $GO_BUILD_FLAGS -installsuffix cgo -ldflags "-s" -o bin/etcdctl ${REPO_PATH}/etcdctl
+CGO_ENABLED=0 GOARCH=${ARCH} GOOS=${OS} go build $GO_BUILD_FLAGS -installsuffix cgo -ldflags "-s -X ${REPO_PATH}/version.GitSHA${LINK_OPERATOR}${GIT_SHA}" -o bin/etcd ${REPO_PATH}
+CGO_ENABLED=0 GOARCH=${ARCH} GOOS=${OS} go build $GO_BUILD_FLAGS -installsuffix cgo -ldflags "-s" -o bin/etcdctl ${REPO_PATH}/etcdctl

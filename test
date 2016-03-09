@@ -13,6 +13,10 @@ set -e
 # Invoke ./cover for HTML output
 COVER=${COVER:-"-cover"}
 
+# Arch and os defaults to the host platform
+ARCH=${ARCH:-""}
+OS=${OS:-""}
+
 GO_BUILD_FLAGS=-a
 source ./build
 
